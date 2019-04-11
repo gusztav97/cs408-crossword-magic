@@ -147,11 +147,15 @@ public class CrosswordMagicViewModel extends ViewModel {
                 line.trim();
                 fields = line.split("\t");
                 if (fields[3].equals("A")){
-                    aString.append(fields[4]);
+                    aString.append(fields[2] + ": ");
+                    aString.append(fields[5]);
+                    aString.append("\n");
                 }
 
                 if (fields[3].equals("D")){
-                    dString.append(fields[4]);
+                    dString.append(fields[2]+ ": ");
+                    dString.append(fields[5]);
+                    dString.append("\n");
                 }
             }
 
@@ -177,6 +181,7 @@ public class CrosswordMagicViewModel extends ViewModel {
             Word w = e.getValue();
 
             // INSERT YOUR CODE HERE
+
 
         }
 
