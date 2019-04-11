@@ -131,8 +131,10 @@ public class CrosswordMagicViewModel extends ViewModel {
 
             // Read from the input file using the "br" input stream shown above.  Your program
             // should get the puzzle height/width from the header row in the first line of the
-            // input file.  Replace the placeholder values shown below with the values from the
-            // file.  Get the data from the remaining rows, splitting each tab-delimited line
+            // input file.
+            // Replace the placeholder values shown below with the values from the
+            // file.
+            // Get the data from the remaining rows, splitting each tab-delimited line
             // into an array of strings, which you can use to initialize a Word object.  Add each
             // Word object to the "wordMap" hash map; for the key names, use the box number
             // followed by the direction (for example, "16D" for Box # 16, Down).
@@ -157,6 +159,9 @@ public class CrosswordMagicViewModel extends ViewModel {
                     dString.append(fields[5]);
                     dString.append("\n");
                 }
+
+                Word newWord = new Word(fields);
+                String key = newWord.getBox() + newWord.getDirection();
             }
 
         } catch (Exception e) {}
@@ -181,6 +186,12 @@ public class CrosswordMagicViewModel extends ViewModel {
             Word w = e.getValue();
 
             // INSERT YOUR CODE HERE
+
+            // Iterate through collection
+            // Take each letter of words, place into correct box.\
+            // array for letters and numbers
+            //place into aLetters and aNumbers
+
 
 
         }
