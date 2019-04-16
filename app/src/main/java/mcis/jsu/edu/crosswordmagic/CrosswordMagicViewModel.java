@@ -141,27 +141,37 @@ public class CrosswordMagicViewModel extends ViewModel {
 
             line = br.readLine();
 
-            fields = line.split("\t");
-            puzzleWidth.setValue(Integer.parseInt(fields[0]));
-            puzzleHeight.setValue(Integer.parseInt(fields[1]));
+            fields = line.trim().split("\t");
 
-            while((line = br.readLine()) != null){
+            if (fields.length == Word.HEADER_FIELDS) {
+                puzzleWidth.setValue(Integer.parseInt(fields[0]));
+                puzzleHeight.setValue(Integer.parseInt(fields[1]));
+            }
+
+            while((line = br.readLine()) != null) {
+
                 line.trim();
-                fields = line.split("\t");
-                if (fields[3].equals("A")){
-                    aString.append(fields[2] + ": ");
-                    aString.append(fields[5]);
+
+                fields = line.trim().split("\t");
+                Word newWord = new Word(fields);
+
+                if (newWord.getDirection().equals(Word.ACROSS)) {
+                    aString.append(newWord.getBox());
+                    aString.append(": ");
+                    aString.append(newWord.getClue());
                     aString.append("\n");
                 }
 
-                if (fields[3].equals("D")){
-                    dString.append(fields[2]+ ": ");
-                    dString.append(fields[5]);
+                if (newWord.getDirection().equals(Word.DOWN)){
+                    dString.append(newWord.getBox());
+                    dString.append(": ");
+                    dString.append(newWord.getClue());
                     dString.append("\n");
                 }
 
-                Word newWord = new Word(fields);
                 String key = newWord.getBox() + newWord.getDirection();
+                wordMap.put(key, newWord);
+
             }
 
         } catch (Exception e) {}
@@ -184,16 +194,28 @@ public class CrosswordMagicViewModel extends ViewModel {
         for (HashMap.Entry<String, Word> e : wordMap.entrySet()) {
 
             Word w = e.getValue();
+            int row = w.getRow();
+            int col = w.getColumn();
 
             // INSERT YOUR CODE HERE
 
             // Iterate through collection
             // Take each letter of words, place into correct box.\
             // array for letters and numbers
-            //place into aLetters and aNumbers
+            // place into aLetters and aNumbers
 
+            aNumbers[row][col] = w.getBox();
 
+            for (int i = 0; i < w.getWord().length(); i++){
+                aLetters[row][col] = w.getWord().charAt(i);
 
+                if (w.getDirection().equals(Word.ACROSS)){
+                    col++;
+                }
+                if (w.getDirection().equals(Word.DOWN)){
+                    row++;
+                }
+            }
         }
 
         this.letters.setValue(aLetters);
