@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="across">Across:</string>
     <string name="down">Down:</string>
+    <string name="input_text">Answer</string>
+    <string name="input_title">Place Answer Here</string>
 </resources>

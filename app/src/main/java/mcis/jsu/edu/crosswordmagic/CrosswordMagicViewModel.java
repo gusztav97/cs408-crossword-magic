@@ -3,7 +3,6 @@ package mcis.jsu.edu.crosswordmagic;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -34,6 +33,8 @@ public class CrosswordMagicViewModel extends ViewModel {
     private final MutableLiveData<Character[][]> letters = new MutableLiveData<Character[][]>();
     private final MutableLiveData<Integer[][]> numbers = new MutableLiveData<Integer[][]>();
 
+
+    private String userInput;
     /* Setters / Getters */
 
     public void setContext(Context c) {
@@ -113,6 +114,31 @@ public class CrosswordMagicViewModel extends ViewModel {
 
     public HashMap<String, Word> getWords() {
         return words.getValue();
+    }
+
+    // additional methods to be added
+
+    public Word getWord(String coordinate){
+        return words.getValue().get(coordinate);
+
+    }
+
+    public void addWordToGrid(String coordinate){
+        Word w = words.getValue().get(coordinate);
+
+        if(w != null) {
+            int row = w.getRow();
+            int col = w.getColumn();
+            String word = w.getWord();
+
+            for (int i = 0; i < word.length(); i++){
+                letters.getValue()[row][col] = word.charAt(i);
+                if (w.getDirection().equals(Word.ACROSS))
+                    col++;
+                else
+                    row++;
+            }
+        }
     }
 
     /* Load Puzzle Data from Input File */
@@ -207,8 +233,8 @@ public class CrosswordMagicViewModel extends ViewModel {
             aNumbers[row][col] = w.getBox();
 
             for (int i = 0; i < w.getWord().length(); i++){
-                aLetters[row][col] = w.getWord().charAt(i);
-
+                //aLetters[row][col] = w.getWord().charAt(i);
+                aLetters[row][col] = ' ';
                 if (w.getDirection().equals(Word.ACROSS)){
                     col++;
                 }
